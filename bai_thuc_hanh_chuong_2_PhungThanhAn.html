@@ -110,3 +110,598 @@
     </table>
 </body>
 </html>
+
+<!-- Bài tập 03 thực hành 1: Bảng Điểm HTML -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập 03: Bảng Điểm HTML</title>
+    <style>
+        /* CSS để tạo kiểu cho bảng giống với hình ảnh */
+        body {
+            font-family: sans-serif;
+        }
+        table {
+            border-collapse: collapse; /* Gộp đường viền */
+            width: 100%;
+            max-width: 800px; /* Giới hạn chiều rộng tối đa */
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid black; /* Tạo đường viền cho các ô */
+            padding: 8px; /* Thêm khoảng đệm */
+            text-align: center; /* Căn giữa nội dung */
+        }
+        thead th {
+            background-color: #f2f2f2; /* Tô màu nền cho tiêu đề */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">Student</th>
+                <th colspan="4">Exam</th>
+                <th colspan="4">2nd Exam</th>
+                <th colspan="2">Final Grade</th>
+            </tr>
+            <tr>
+                <th rowspan="2">Code</th>
+                <th rowspan="2">Name</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th rowspan="2">Grade</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th rowspan="2">Grade</th>
+                <th rowspan="2">NR</th>
+                <th rowspan="2">R</th>
+            </tr>
+            <tr>
+                <th>8</th>
+                <th>7</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>80549061</td>
+                <td>John</td>
+                <td>70%</td>
+                <td>100%</td>
+                <td>100%</td>
+                <td>17.6</td>
+                <td colspan="4"></td> <td>17.6</td>
+                <td>18</td>
+            </tr>
+            <tr>
+                <td>80549062</td>
+                <td>Mary</td>
+                <td>10%</td>
+                <td>50%</td>
+                <td>50%</td>
+                <td>6.8</td>
+                <td>100%</td>
+                <td>100%</td>
+                <td>50%</td>
+                <td>16.5</td>
+                <td>16.5</td>
+                <td>17</td>
+            </tr>
+            <tr>
+                <td>80549063</td>
+                <td>Claire</td>
+                <td colspan="4"></td> 
+                <td>50%</td>
+                <td>50%</td>
+                <td>50%</td>
+                <td>10.0</td>
+                <td>10.0</td>
+                <td>10</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
+
+<!-- Bài tập 04 thực hành 1: Form thông tin nhân viên -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Information Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #333;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 15px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .form-row label {
+            font-weight: 500;
+            text-align: right;
+            color: #333;
+        }
+
+        .form-row input[type="text"],
+        .form-row input[type="email"],
+        .form-row input[type="tel"],
+        .form-row input[type="date"],
+        .form-row select {
+            padding: 6px 8px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .form-row input[type="text"]:focus,
+        .form-row input[type="email"]:focus,
+        .form-row input[type="tel"]:focus,
+        .form-row input[type="date"]:focus,
+        .form-row select:focus {
+            outline: none;
+            border-color: #007acc;
+            box-shadow: 0 0 3px rgba(0,122,204,0.3);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .notes-container {
+            width: 100%;
+        }
+
+        .toolbar {
+            border: 1px solid #ccc;
+            border-bottom: none;
+            padding: 5px;
+            background: #f8f8f8;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .toolbar button {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 3px 6px;
+            margin-right: 2px;
+            cursor: pointer;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        .toolbar button:hover {
+            background: #e8e8e8;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            height: 120px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 0 0 3px 3px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .captcha-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .captcha-image {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #333;
+            text-decoration: line-through;
+            border-radius: 3px;
+        }
+
+        .captcha-input {
+            width: 120px;
+            padding: 6px;
+            border: 1px solid #999;
+            border-radius: 3px;
+        }
+
+        .captcha-refresh {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-submit {
+            background: #007acc;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #005a9e;
+        }
+
+        .btn-cancel {
+            background: #666;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: #555;
+        }
+
+        .required {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        .help-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #007acc;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 16px;
+            font-size: 12px;
+            margin-left: 5px;
+            cursor: help;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .form-row label {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form id="employeeForm">
+            <!-- Basic Info Section -->
+            <div class="form-section">
+                <div class="section-title">Basic Info</div>
+                
+                <div class="form-row">
+                    <label for="employeeId">Employee ID</label>
+                    <input type="text" id="employeeId" name="employeeId" value="9" readonly>
+                </div>
+
+                <div class="form-row">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" value="Dodsworth" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" value="Anne" required>
+                    <span class="help-icon" title="Enter your first name">?</span>
+                </div>
+
+                <div class="form-row">
+                    <label>Gender</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender" value="male"> Male</label>
+                        <label><input type="radio" name="gender" value="female"> Female</label>
+                        <label><input type="radio" name="gender" value="xxx"> XXX</label>
+                        <label><input type="radio" name="gender" value="zzz" checked> ZZZ</label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" value="Sales Representative">
+                </div>
+
+                <div class="form-row">
+                    <label for="suffix">Suffix</label>
+                    <input type="text" id="suffix" name="suffix" value="Jr">
+                </div>
+
+                <div class="form-row">
+                    <label for="birthDate">BirthDate</label>
+                    <input type="date" id="birthDate" name="birthDate" value="1969-07-02">
+                    <span class="help-icon" title="Select your birth date">?</span>
+                </div>
+
+                <div class="form-row">
+                    <label for="hireDate">HireDate</label>
+                    <input type="date" id="hireDate" name="hireDate" value="1994-11-15">
+                </div>
+
+                <div class="form-row">
+                    <label for="ssn">SSN # (if applicable)</label>
+                    <input type="text" id="ssn" name="ssn" placeholder="XXX-XX-XXXX">
+                    <span class="help-icon" title="Social Security Number">?</span>
+                </div>
+
+                <div class="form-row">
+                    <label for="reportsTo">Reports To</label>
+                    <select id="reportsTo" name="reportsTo">
+                        <option value="">Select Manager</option>
+                        <option value="buchanan" selected>Buchanan</option>
+                        <option value="fuller">Fuller</option>
+                        <option value="leverling">Leverling</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Contact Info Section -->
+            <div class="form-section">
+                <div class="section-title">Contact Info</div>
+                
+                <div class="form-row">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="name@example.com">
+                </div>
+
+                <div class="form-row">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" value="7 Houndstooth Rd.">
+                </div>
+
+                <div class="form-row">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" value="London">
+                </div>
+
+                <div class="form-row">
+                    <label for="region">Region</label>
+                    <input type="text" id="region" name="region">
+                </div>
+
+                <div class="form-row">
+                    <label for="postalCode">Postal Code</label>
+                    <input type="text" id="postalCode" name="postalCode" value="WG2 7LT">
+                </div>
+
+                <div class="form-row">
+                    <label for="country">Country</label>
+                    <select id="country" name="country">
+                        <option value="">Select Country</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="usa">United States</option>
+                        <option value="canada">Canada</option>
+                        <option value="russia" selected>Russian Federation</option>
+                        <option value="germany">Germany</option>
+                        <option value="france">France</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="phone">US Home Phone</label>
+                    <input type="tel" id="phone" name="phone" value="(234)234-2342">
+                </div>
+
+                <div class="form-row">
+                    <label for="photo">Photo</label>
+                    <input type="text" id="photo" name="photo" value="EmpID9.bmp">
+                </div>
+            </div>
+
+            <!-- Optional Info Section -->
+            <div class="form-section">
+                <div class="section-title">Optional Info</div>
+                
+                <div class="form-row">
+                    <label for="notes">Notes</label>
+                    <div class="notes-container">
+                        <div class="toolbar">
+                            <button type="button" title="Bold"><strong>B</strong></button>
+                            <button type="button" title="Italic"><em>I</em></button>
+                            <button type="button" title="Underline"><u>U</u></button>
+                            <button type="button" title="Align Left">≡</button>
+                            <button type="button" title="Align Center">≡</button>
+                            <button type="button" title="Align Right">≡</button>
+                            <button type="button" title="Bullet List">•</button>
+                            <button type="button" title="Number List">1.</button>
+                            <button type="button" title="Link">🔗</button>
+                            <button type="button" title="Image">🖼</button>
+                            <button type="button" title="Table">⊞</button>
+                            <button type="button" title="Font Size">A</button>
+                            <button type="button" title="Clear">✕</button>
+                        </div>
+                        <textarea class="notes-textarea" id="notes" name="notes" placeholder="Enter notes here...">Anne has a BA degree in English from St. Lawrence College. She is fluent in French and German ZZZ</textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Preferred Shift</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="shift" value="regular"> Regular</label>
+                        <label><input type="checkbox" name="shift" value="graveyard" checked> Graveyard</label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Active?</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="active" value="yes" checked> Yes</label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Are you human?</label>
+                    <div class="captcha-container">
+                        <div class="captcha-image">TI0ANO</div>
+                        <input type="text" class="captcha-input" name="captcha" placeholder="Enter code">
+                        <button type="button" class="captcha-refresh" onclick="refreshCaptcha()">Click to change</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="required">* required</div>
+
+            <div class="form-buttons">
+                <button type="button" class="btn btn-cancel">✕ Cancel</button>
+                <button type="submit" class="btn btn-submit">📋 Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Form validation and submission
+        document.getElementById('employeeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const captcha = document.querySelector('input[name="captcha"]').value;
+            
+            if (!firstName || !lastName) {
+                alert('Please fill in required fields (First Name and Last Name)');
+                return;
+            }
+            
+            if (!captcha) {
+                alert('Please complete the CAPTCHA');
+                return;
+            }
+            
+            // Simulate form submission
+            alert('Form submitted successfully!');
+        });
+
+        // CAPTCHA refresh function
+        function refreshCaptcha() {
+            const captchaTexts = ['TI0ANO', 'X7K9M2', 'H8Q3F1', 'N5R7W4', 'B2T6Y9'];
+            const randomText = captchaTexts[Math.floor(Math.random() * captchaTexts.length)];
+            document.querySelector('.captcha-image').textContent = randomText;
+            document.querySelector('.captcha-input').value = '';
+        }
+
+        // Toolbar button functionality (basic example)
+        document.querySelectorAll('.toolbar button').forEach(button => {
+            button.addEventListener('click', function() {
+                const textarea = document.getElementById('notes');
+                textarea.focus();
+                // This is a simplified example - real rich text editor would be more complex
+                console.log('Toolbar button clicked:', this.title);
+            });
+        });
+
+        // Cancel button
+        document.querySelector('.btn-cancel').addEventListener('click', function() {
+            if (confirm('Are you sure you want to cancel? All changes will be lost.')) {
+                document.getElementById('employeeForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>
