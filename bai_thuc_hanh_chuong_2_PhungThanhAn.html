@@ -640,7 +640,7 @@
                     <div class="captcha-container">
                         <div class="captcha-image">TI0ANO</div>
                         <input type="text" class="captcha-input" name="captcha" placeholder="Enter code">
-                        <button type="button" class="captcha-refresh" onclick="refreshCaptcha()">Click to change</button>
+                        <button type="button" class="captcha-refresh">Click to change</button>
                     </div>
                 </div>
             </div>
@@ -653,55 +653,5 @@
             </div>
         </form>
     </div>
-
-    <script>
-        // Form validation and submission
-        document.getElementById('employeeForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Basic validation
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const captcha = document.querySelector('input[name="captcha"]').value;
-            
-            if (!firstName || !lastName) {
-                alert('Please fill in required fields (First Name and Last Name)');
-                return;
-            }
-            
-            if (!captcha) {
-                alert('Please complete the CAPTCHA');
-                return;
-            }
-            
-            // Simulate form submission
-            alert('Form submitted successfully!');
-        });
-
-        // CAPTCHA refresh function
-        function refreshCaptcha() {
-            const captchaTexts = ['TI0ANO', 'X7K9M2', 'H8Q3F1', 'N5R7W4', 'B2T6Y9'];
-            const randomText = captchaTexts[Math.floor(Math.random() * captchaTexts.length)];
-            document.querySelector('.captcha-image').textContent = randomText;
-            document.querySelector('.captcha-input').value = '';
-        }
-
-        // Toolbar button functionality (basic example)
-        document.querySelectorAll('.toolbar button').forEach(button => {
-            button.addEventListener('click', function() {
-                const textarea = document.getElementById('notes');
-                textarea.focus();
-                // This is a simplified example - real rich text editor would be more complex
-                console.log('Toolbar button clicked:', this.title);
-            });
-        });
-
-        // Cancel button
-        document.querySelector('.btn-cancel').addEventListener('click', function() {
-            if (confirm('Are you sure you want to cancel? All changes will be lost.')) {
-                document.getElementById('employeeForm').reset();
-            }
-        });
-    </script>
 </body>
 </html>
