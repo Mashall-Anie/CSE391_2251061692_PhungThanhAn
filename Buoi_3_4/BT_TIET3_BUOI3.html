@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sinh viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #1e3a8a;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #e0f2ff;
+        }
+
+        thead th {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #e0f2ff;
+        }
+
+        tbody tr:hover {
+            background-color: #e0f2ff;
+        }
+
+        td a {
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Tiết 5: Form thêm sinh viên -->
+    <h1>Thêm sinh viên mới</h1>
+    <form>
+        <div>
+            <label for="maSV">Mã sinh viên:</label><br>
+            <input type="text" id="maSV" name="maSV" required>
+        </div>
+        
+        <div>
+            <label for="hoTen">Họ và tên:</label><br>
+            <input type="text" id="hoTen" name="hoTen" required>
+        </div>
+        
+        <div>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div>
+            <label for="ngaySinh">Ngày sinh:</label><br>
+            <input type="date" id="ngaySinh" name="ngaySinh">
+        </div>
+        
+        <div>
+            <label>Giới tính:</label><br>
+            <input type="radio" id="nam" name="gioiTinh" value="Nam">
+            <label for="nam">Nam</label>
+            <input type="radio" id="nu" name="gioiTinh" value="Nữ">
+            <label for="nu">Nữ</label>
+        </div>
+        
+        <div>
+            <label for="ghiChu">Ghi chú:</label><br>
+            <textarea id="ghiChu" name="ghiChu" rows="3" cols="50"></textarea>
+        </div>
+        
+        <button type="submit">Thêm sinh viên</button>
+    </form>
+    
+    <hr>
+    
+    <!-- Tiết 6: Bảng hiển thị danh sách sinh viên -->
+    <h2>Danh sách sinh viên</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã SV</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>SV001</td>
+                <td>Phùng Thành An</td>
+                <td>an.pt@email.com</td>
+                <td>Nam</td>
+                <td>15/03/2003</td>
+                <td>
+                    <a href="#">Sửa</a> | 
+                    <a href="#">Xóa</a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>SV002</td>
+                <td>Trần Hà Trang</td>
+                <td>trang.th@email.com</td>
+                <td>Nữ</td>
+                <td>22/07/2003</td>
+                <td>
+                    <a href="#">Sửa</a> | 
+                    <a href="#">Xóa</a>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>SV003</td>
+                <td>Nguyễn Thị Hải Xuân</td>
+                <td>xuanchuong@email.com</td>
+                <td>Nữ</td>
+                <td>10/12/2002</td>
+                <td>
+                    <a href="#">Sửa</a> | 
+                    <a href="#">Xóa</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
