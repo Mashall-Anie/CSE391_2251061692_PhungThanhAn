@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sinh viên</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1>Quản lý sinh viên</h1>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Form Section -->
+            <div class="form-section">
+                <h2 class="form-title">Thêm sinh viên mới</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="maSV">Mã sinh viên:</label>
+                        <input type="text" id="maSV" name="maSV" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hoTen">Họ và tên:</label>
+                        <input type="text" id="hoTen" name="hoTen" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ngaySinh">Ngày sinh:</label>
+                        <input type="date" id="ngaySinh" name="ngaySinh" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Giới tính:</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="gioiTinh" value="Nam"> Nam
+                            </label>
+                            <label>
+                                <input type="radio" name="gioiTinh" value="Nữ"> Nữ
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ghiChu">Ghi chú:</label>
+                        <textarea id="ghiChu" name="ghiChu" rows="3" class="form-control"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Thêm sinh viên</button>
+                </form>
+            </div>
+
+            <!-- Table Section -->
+            <div class="table-section">
+                <h2 class="table-title">Danh sách sinh viên</h2>
+                
+                <!-- Desktop Table -->
+                <div class="table-wrapper">
+                    <table class="student-table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã SV</th>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>SV001</td>
+                                <td>Phùng Thành An</td>
+                                <td>an.pt@email.com</td>
+                                <td>Nam</td>
+                                <td>15/03/2003</td>
+                                <td>
+                                    <a href="#" class="action-link">Sửa</a>
+                                    <a href="#" class="action-link">Xóa</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>SV002</td>
+                                <td>Trần Hà Trang</td>
+                                <td>trang.th@email.com</td>
+                                <td>Nữ</td>
+                                <td>22/07/2003</td>
+                                <td>
+                                    <a href="#" class="action-link">Sửa</a>
+                                    <a href="#" class="action-link">Xóa</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>SV003</td>
+                                <td>Nguyễn Thị Hải Xuân</td>
+                                <td>xuanchuong@email.com</td>
+                                <td>Nữ</td>
+                                <td>10/12/2002</td>
+                                <td>
+                                    <a href="#" class="action-link">Sửa</a>
+                                    <a href="#" class="action-link">Xóa</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile Cards -->
+                <div class="mobile-card">
+                    <div class="student-card">
+                        <div class="card-header">
+                            <div class="student-name">Phùng Thành An</div>
+                            <div class="student-id">SV001</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value">an.pt@email.com</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Giới tính:</span>
+                                <span class="info-value">Nam</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Ngày sinh:</span>
+                                <span class="info-value">15/03/2003</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="mobile-action">✏️ Sửa</a>
+                            <a href="#" class="mobile-action">🗑️ Xóa</a>
+                        </div>
+                    </div>
+
+                    <div class="student-card">
+                        <div class="card-header">
+                            <div class="student-name">Trần Hà Trang</div>
+                            <div class="student-id">SV002</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value">trang.th@email.com</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Giới tính:</span>
+                                <span class="info-value">Nữ</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Ngày sinh:</span>
+                                <span class="info-value">22/07/2003</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="mobile-action">✏️ Sửa</a>
+                            <a href="#" class="mobile-action">🗑️ Xóa</a>
+                        </div>
+                    </div>
+
+                    <div class="student-card">
+                        <div class="card-header">
+                            <div class="student-name">Nguyễn Thị Hải Xuân</div>
+                            <div class="student-id">SV003</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="info-row">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value">xuanchuong@email.com</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Giới tính:</span>
+                                <span class="info-value">Nữ</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Ngày sinh:</span>
+                                <span class="info-value">10/12/2002</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="mobile-action">✏️ Sửa</a>
+                            <a href="#" class="mobile-action">🗑️ Xóa</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
