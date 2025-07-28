@@ -19,7 +19,7 @@
         <div class="main-content">
             <!-- Form Section -->
             <div class="form-section">
-                <h2 class="form-title">Thêm sinh viên mới</h2>
+                <h2 class="form-title" id="formTitle">Thêm sinh viên mới</h2>
                 <form id="formSinhVien">
                     <div class="form-group">
                         <label for="maSV">Mã sinh viên:</label>
@@ -59,6 +59,8 @@
                     </div>
 
                     <button type="submit" id="btnThem" class="btn-submit">Thêm sinh viên</button>
+                    <button type="button" id="btnHuy" class="btn-cancel" onclick="huyChinhSua()"
+                        style="display: none;">Hủy chỉnh sửa</button>
                 </form>
 
                 <!-- Thông báo -->
@@ -80,6 +82,7 @@
                                 <th>Email</th>
                                 <th>Giới tính</th>
                                 <th>Ngày sinh</th>
+                                <th>Ghi chú</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -91,8 +94,9 @@
                                 <td>an.pt@email.com</td>
                                 <td>Nam</td>
                                 <td>15/03/2003</td>
+                                <td>Học giỏi</td>
                                 <td>
-                                    <a href="#" class="action-link" onclick="suaSinhVien(this)">Sửa</a>
+                                    <a href="#" class="action-link" onclick="suaDong(this)">Sửa</a>
                                     <a href="#" class="action-link delete" onclick="xoaDong(this)">Xóa</a>
                                 </td>
                             </tr>
@@ -103,8 +107,9 @@
                                 <td>trang.th@email.com</td>
                                 <td>Nữ</td>
                                 <td>22/07/2003</td>
+                                <td>Tích cực tham gia hoạt động</td>
                                 <td>
-                                    <a href="#" class="action-link" onclick="suaSinhVien(this)">Sửa</a>
+                                    <a href="#" class="action-link" onclick="suaDong(this)">Sửa</a>
                                     <a href="#" class="action-link delete" onclick="xoaDong(this)">Xóa</a>
                                 </td>
                             </tr>
@@ -115,8 +120,9 @@
                                 <td>xuanchuong@email.com</td>
                                 <td>Nữ</td>
                                 <td>10/12/2002</td>
+                                <td></td>
                                 <td>
-                                    <a href="#" class="action-link" onclick="suaSinhVien(this)">Sửa</a>
+                                    <a href="#" class="action-link" onclick="suaDong(this)">Sửa</a>
                                     <a href="#" class="action-link delete" onclick="xoaDong(this)">Xóa</a>
                                 </td>
                             </tr>
@@ -144,9 +150,13 @@
                                 <span class="info-label">Ngày sinh:</span>
                                 <span class="info-value">15/03/2003</span>
                             </div>
+                            <div class="info-row">
+                                <span class="info-label">Ghi chú:</span>
+                                <span class="info-value">Học giỏi</span>
+                            </div>
                         </div>
                         <div class="card-actions">
-                            <a href="#" class="mobile-action" onclick="suaSinhVien(this)">✏️ Sửa</a>
+                            <a href="#" class="mobile-action" onclick="suaMobileCard(this)">✏️ Sửa</a>
                             <a href="#" class="mobile-action delete" onclick="xoaMobileCard(this)">🗑️ Xóa</a>
                         </div>
                     </div>
@@ -169,9 +179,13 @@
                                 <span class="info-label">Ngày sinh:</span>
                                 <span class="info-value">22/07/2003</span>
                             </div>
+                            <div class="info-row">
+                                <span class="info-label">Ghi chú:</span>
+                                <span class="info-value">Tích cực tham gia hoạt động</span>
+                            </div>
                         </div>
                         <div class="card-actions">
-                            <a href="#" class="mobile-action" onclick="suaSinhVien(this)">✏️ Sửa</a>
+                            <a href="#" class="mobile-action" onclick="suaMobileCard(this)">✏️ Sửa</a>
                             <a href="#" class="mobile-action delete" onclick="xoaMobileCard(this)">🗑️ Xóa</a>
                         </div>
                     </div>
@@ -194,9 +208,13 @@
                                 <span class="info-label">Ngày sinh:</span>
                                 <span class="info-value">10/12/2002</span>
                             </div>
+                            <div class="info-row">
+                                <span class="info-label">Ghi chú:</span>
+                                <span class="info-value"></span>
+                            </div>
                         </div>
                         <div class="card-actions">
-                            <a href="#" class="mobile-action" onclick="suaSinhVien(this)">✏️ Sửa</a>
+                            <a href="#" class="mobile-action" onclick="suaMobileCard(this)">✏️ Sửa</a>
                             <a href="#" class="mobile-action delete" onclick="xoaMobileCard(this)">🗑️ Xóa</a>
                         </div>
                     </div>

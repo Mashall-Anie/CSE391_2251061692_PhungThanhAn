@@ -98,6 +98,31 @@ body {
     transform: translateY(-1px);
 }
 
+.btn-update {
+    background: linear-gradient(to right, #10b981, #059669);
+}
+
+.btn-update:hover {
+    background: #047857;
+}
+
+.btn-cancel {
+    width: 100%;
+    margin-top: 0.5rem;
+    background: #6b7280;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: #4b5563;
+}
+
 /* Thông báo */
 .thong-bao {
     margin-top: 1rem;
