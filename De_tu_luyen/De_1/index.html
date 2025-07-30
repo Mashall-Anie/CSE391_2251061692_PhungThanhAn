@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLU - Employee Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-brand">TLU</div>
+        <div class="navbar-nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link active">Employees</a>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search" id="searchInput">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Manage Employees</h1>
+            <div class="action-buttons">
+                <button class="btn btn-danger" onclick="openDeleteModal()">
+                    <svg class="icon" viewBox="0 0 20 20">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                        <path fill-rule="evenodd"
+                            d="M10 5a1 1 0 011 1v3l1.586-1.586a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9 9V6a1 1 0 011-1z" />
+                    </svg>
+                    Delete
+                </button>
+                <button class="btn btn-success" onclick="openAddModal()">
+                    <svg class="icon" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+                    </svg>
+                    Add New Employee
+                </button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                        </th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+
+            <div class="pagination-container">
+                <div class="pagination-info">
+                    Showing <strong id="currentStart">1</strong> out of <strong id="totalEntries">0</strong> entries
+                </div>
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Employee Modal -->
+    <div id="addEmployeeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Employee</h2>
+                <button class="modal-close" onclick="closeModal('addEmployeeModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addEmployeeForm">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-input" name="address" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="text" class="form-input" name="phone" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal('addEmployeeModal')">Cancel</button>
+                <button class="btn btn-success" onclick="addEmployee()">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Employee Modal -->
+    <div id="editEmployeeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Employee</h2>
+                <button class="modal-close" onclick="closeModal('editEmployeeModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editEmployeeForm">
+                    <input type="hidden" name="id">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-input" name="address" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="text" class="form-input" name="phone" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal('editEmployeeModal')">Cancel</button>
+                <button class="btn btn-success" onclick="updateEmployee()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Employee Modal -->
+    <div id="deleteEmployeeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Delete Employee</h2>
+                <button class="modal-close" onclick="closeModal('deleteEmployeeModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete these records?</p>
+                <p style="color: #f59e0b; font-size: 0.875rem;">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal('deleteEmployeeModal')">Cancel</button>
+                <button class="btn btn-danger" onclick="deleteSelectedEmployees()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
