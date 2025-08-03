@@ -43,7 +43,7 @@
                 <!-- Action Bar -->
                 <div class="action-bar">
                     <div class="action-left">
-                        <button class="btn btn-success" onclick="openAddModal()">
+                        <button class="btn btn-success">
                             <i class="material-icons">&#xE147;</i>
                             <span>Thêm</span>
                         </button>
@@ -51,8 +51,7 @@
                             <i class="material-icons">&#xE2C4;</i>
                             <span>Xuất file</span>
                         </button>
-                        <button id="deleteSelectedBtn" class="btn btn-danger btn-delete-selected"
-                            onclick="openDeleteModal()">
+                        <button id="deleteSelectedBtn" class="btn btn-danger btn-delete-selected">
                             <i class="material-icons">&#xE15C;</i>
                             <span>Xóa</span>
                         </button>
@@ -70,7 +69,7 @@
                         <tr>
                             <th>
                                 <span class="custom-checkbox">
-                                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                                    <input type="checkbox" id="selectAll">
                                     <label for="selectAll"></label>
                                 </span>
                             </th>
@@ -107,7 +106,7 @@
                 <form id="addTransactionForm" onsubmit="return addTransaction(event)">
                     <div class="modal-header">
                         <h4 class="modal-title">Thêm giao dịch</h4>
-                        <button type="button" class="close" onclick="closeModal('addTransactionModal')">&times;</button>
+                        <button type="button" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" id="addFormErrors" style="display: none;"></div>
@@ -127,8 +126,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            onclick="closeModal('addTransactionModal')">Hủy</button>
+                        <button type="button" class="btn btn-secondary">Hủy</button>
                         <button type="submit" class="btn btn-success">Thêm</button>
                     </div>
                 </form>
@@ -143,8 +141,7 @@
                 <form id="editTransactionForm" onsubmit="return updateTransaction(event)">
                     <div class="modal-header">
                         <h4 class="modal-title">Sửa giao dịch</h4>
-                        <button type="button" class="close"
-                            onclick="closeModal('editTransactionModal')">&times;</button>
+                        <button type="button" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" id="editFormErrors" style="display: none;"></div>
@@ -165,8 +162,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            onclick="closeModal('editTransactionModal')">Hủy</button>
+                        <button type="button" class="btn btn-secondary">Hủy</button>
                         <button type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                 </form>
@@ -180,16 +176,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Xóa giao dịch</h4>
-                    <button type="button" class="close" onclick="closeModal('deleteTransactionModal')">&times;</button>
+                    <button type="button" class="close">&times;</button>
                 </div>
                 <div class="modal-body">
                     <p>Bạn có chắc chắn muốn xóa những giao dịch đã chọn?</p>
                     <p class="text-warning"><small>Hành động này không thể hoàn tác.</small></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        onclick="closeModal('deleteTransactionModal')">Hủy</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteSelectedTransactions()">Xóa</button>
+                    <button type="button" class="btn btn-secondary">Hủy</button>
+                    <button type="button" class="btn btn-danger">Xóa</button>
                 </div>
             </div>
         </div>

@@ -1,113 +1,118 @@
-// Khởi tạo dữ liệu từ file data.js
+// Khởi tạo dữ liệu
 let transactions = [...transactionData];
 let currentPage = 1;
 const itemsPerPage = 5;
 let filteredTransactions = [...transactions];
 let selectedTransactions = new Set();
 
-// Format currency in Vietnamese dong
+// Format tiền tệ và ngày tháng
 function formatCurrency(amount) {
     return new Intl.NumberFormat('vi-VN').format(amount);
 }
 
-// Format date
 function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('vi-VN', {
         day: '2-digit',
-        month: '2-digit',
+        month: '2-digit', 
         year: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
     });
 }
 
+// Hiển thị bảng
 function renderTable() {
-    const tbody = document.getElementById('transactionTableBody');
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentTransactions = filteredTransactions.slice(startIndex, endIndex);
+    const start = (currentPage - 1) * itemsPerPage;
+    const currentTransactions = filteredTransactions.slice(start, start + itemsPerPage);
 
-    tbody.innerHTML = currentTransactions.map(transaction => `
-        <tr>
-            <td>
-                <span class="custom-checkbox">
-                    <input type="checkbox" id="checkbox${transaction.id}" value="${transaction.id}" 
-                           onchange="toggleTransactionSelection(${transaction.id})"
-                           ${selectedTransactions.has(transaction.id) ? 'checked' : ''}>
-                    <label for="checkbox${transaction.id}"></label>
-                </span>
-            </td>
-            <td>
-                <div class="action-buttons">
-                    <a href="#" class="view" onclick="viewTransaction(${transaction.id})" title="Xem">
-                        <i class="material-icons">&#xE417;</i>
-                    </a>
-                    <a href="#" class="edit" onclick="openEditModal(${transaction.id})" title="Sửa">
-                        <i class="material-icons">&#xE254;</i>
-                    </a>
-                    <a href="#" class="delete" onclick="openDeleteModal(${transaction.id})" title="Xóa">
-                        <i class="material-icons">&#xE872;</i>
-                    </a>
-                </div>
-            </td>
-            <td>${transaction.id}</td>
-            <td>${transaction.customer}</td>
-            <td>${transaction.employee}</td>
-            <td class="currency">${formatCurrency(transaction.amount)} ₫</td>
-            <td>${formatDate(transaction.date)}</td>
-        </tr>
-    `).join('');
-
+    let html = '';
+    currentTransactions.forEach(t => {
+        html += `
+            <tr>
+                <td>
+                    <span class="custom-checkbox">
+                        <input type="checkbox" id="checkbox${t.id}" value="${t.id}">
+                        <label for="checkbox${t.id}"></label>
+                    </span>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="#" class="view" data-id="${t.id}" title="Xem">
+                            <i class="material-icons">&#xE417;</i>
+                        </a>
+                        <a href="#" class="edit" data-id="${t.id}" title="Sửa">
+                            <i class="material-icons">&#xE254;</i>
+                        </a>
+                        <a href="#" class="delete" data-id="${t.id}" title="Xóa">
+                            <i class="material-icons">&#xE872;</i>
+                        </a>
+                    </div>
+                </td>
+                <td>${t.id}</td>
+                <td>${t.customer}</td>
+                <td>${t.employee}</td>
+                <td class="currency">${formatCurrency(t.amount)} ₫</td>
+                <td>${formatDate(t.date)}</td>
+            </tr>
+        `;
+    });
+    
+    $('#transactionTableBody').html(html);
     updatePagination();
     updatePaginationInfo();
     updateDeleteButton();
 }
 
+// Phân trang
 function updatePagination() {
     const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
-    const pagination = document.getElementById('pagination');
+    let html = '';
     
-    let paginationHTML = '';
+    // Nút Trước
+    const prevClass = currentPage === 1 ? 'disabled' : '';
+    html += `<li class="page-item ${prevClass}">
+                <a href="#" class="page-link" data-page="${currentPage - 1}">Trước</a>
+             </li>`;
     
-    // Previous button
-    paginationHTML += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-                      <a href="#" class="page-link" onclick="changePage(${currentPage - 1})">Trước</a></li>`;
-    
-    // Page numbers
+    // Số trang
     for (let i = 1; i <= totalPages; i++) {
-        paginationHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-                          <a href="#" class="page-link" onclick="changePage(${i})">${i}</a></li>`;
+        const activeClass = i === currentPage ? 'active' : '';
+        html += `<li class="page-item ${activeClass}">
+                    <a href="#" class="page-link" data-page="${i}">${i}</a>
+                 </li>`;
     }
     
-    // Next button
-    paginationHTML += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-                      <a href="#" class="page-link" onclick="changePage(${currentPage + 1})">Sau</a></li>`;
+    // Nút Sau
+    const nextClass = currentPage === totalPages ? 'disabled' : '';
+    html += `<li class="page-item ${nextClass}">
+                <a href="#" class="page-link" data-page="${currentPage + 1}">Sau</a>
+             </li>`;
     
-    pagination.innerHTML = paginationHTML;
+    $('#pagination').html(html);
 }
 
+// Cập nhật thông tin phân trang
 function updatePaginationInfo() {
-    const startIndex = (currentPage - 1) * itemsPerPage + 1;
-    const endIndex = Math.min(currentPage * itemsPerPage, filteredTransactions.length);
+    const start = (currentPage - 1) * itemsPerPage + 1;
+    const end = Math.min(currentPage * itemsPerPage, filteredTransactions.length);
     
-    document.getElementById('currentStart').textContent = startIndex;
-    document.getElementById('currentEnd').textContent = endIndex;
-    document.getElementById('totalEntries').textContent = filteredTransactions.length;
+    $('#currentStart').text(start);
+    $('#currentEnd').text(end);
+    $('#totalEntries').text(filteredTransactions.length);
 }
 
+// Cập nhật nút xóa
 function updateDeleteButton() {
-    const deleteBtn = document.getElementById('deleteSelectedBtn');
-    const selectedCount = selectedTransactions.size;
-    
-    if (selectedCount > 0) {
-        deleteBtn.style.display = 'inline-block';
-        deleteBtn.innerHTML = `<i class="material-icons">&#xE15C;</i> <span>Xóa (${selectedCount})</span>`;
+    const count = selectedTransactions.size;
+    if (count > 0) {
+        $('#deleteSelectedBtn').show().html(`<i class="material-icons">&#xE15C;</i> <span>Xóa (${count})</span>`);
     } else {
-        deleteBtn.style.display = 'none';
+        $('#deleteSelectedBtn').hide();
     }
 }
 
+// Thay đổi trang
 function changePage(page) {
     const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
     if (page >= 1 && page <= totalPages) {
@@ -116,150 +121,131 @@ function changePage(page) {
     }
 }
 
+// Chọn tất cả
 function toggleSelectAll() {
-    const selectAllCheckbox = document.getElementById('selectAll');
-    const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
-    
-    if (selectAllCheckbox.checked) {
-        checkboxes.forEach(cb => {
-            cb.checked = true;
-            selectedTransactions.add(parseInt(cb.value));
-        });
-    } else {
-        checkboxes.forEach(cb => {
-            cb.checked = false;
-            selectedTransactions.delete(parseInt(cb.value));
-        });
-    }
+    const checked = $('#selectAll').is(':checked');
+    $('#transactionTableBody input[type="checkbox"]').each(function() {
+        $(this).prop('checked', checked);
+        const id = parseInt($(this).val());
+        if (checked) {
+            selectedTransactions.add(id);
+        } else {
+            selectedTransactions.delete(id);
+        }
+    });
     updateDeleteButton();
 }
 
-function toggleTransactionSelection(transactionId) {
-    if (selectedTransactions.has(transactionId)) {
-        selectedTransactions.delete(transactionId);
+// Chọn từng item
+function toggleSelection(id) {
+    if (selectedTransactions.has(id)) {
+        selectedTransactions.delete(id);
     } else {
-        selectedTransactions.add(transactionId);
+        selectedTransactions.add(id);
     }
     
-    // Update select all checkbox
-    const selectAllCheckbox = document.getElementById('selectAll');
-    const visibleCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]');
-    const allChecked = Array.from(visibleCheckboxes).every(cb => cb.checked);
-    selectAllCheckbox.checked = allChecked;
+    // Cập nhật select all
+    const total = $('#transactionTableBody input[type="checkbox"]').length;
+    const checked = $('#transactionTableBody input[type="checkbox"]:checked').length;
+    $('#selectAll').prop('checked', total === checked);
     
     updateDeleteButton();
 }
 
-function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    modal.style.display = 'block';
-    modal.classList.add('show');
-    document.body.classList.add('modal-open');
+// Mở/đóng modal
+function openModal(id) {
+    $('#' + id).addClass('show').show();
+    $('body').addClass('modal-open');
 }
 
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    modal.style.display = 'none';
-    modal.classList.remove('show');
-    document.body.classList.remove('modal-open');
-    
-    // Clear form errors
-    const errorDiv = modal.querySelector('.alert-danger');
-    if (errorDiv) {
-        errorDiv.style.display = 'none';
-        errorDiv.innerHTML = '';
+function closeModal(id) {
+    $('#' + id).removeClass('show').hide();
+    $('body').removeClass('modal-open');
+    $('#' + id).find('.alert-danger').hide();
+}
+
+// Tìm kiếm
+function searchTransactions() {
+    const term = $('#searchInput').val().toLowerCase();
+    filteredTransactions = transactions.filter(t => 
+        t.customer.toLowerCase().includes(term) ||
+        t.employee.toLowerCase().includes(term) ||
+        t.id.toString().includes(term) ||
+        t.amount.toString().includes(term)
+    );
+    currentPage = 1;
+    renderTable();
+}
+
+// Xem giao dịch
+function viewTransaction(id) {
+    const t = transactions.find(item => item.id == id);
+    if (t) {
+        alert(`Thông tin giao dịch:\n\nID: ${t.id}\nKhách hàng: ${t.customer}\nNhân viên: ${t.employee}\nSố tiền: ${formatCurrency(t.amount)} ₫\nNgày: ${formatDate(t.date)}`);
     }
 }
 
-function openAddModal() {
-    document.getElementById('addTransactionForm').reset();
-    openModal('addTransactionModal');
-}
-
-function openEditModal(transactionId) {
-    const transaction = transactions.find(t => t.id === transactionId);
-    if (transaction) {
-        const form = document.getElementById('editTransactionForm');
-        form.querySelector('input[name="id"]').value = transaction.id;
-        form.querySelector('input[name="customer"]').value = transaction.customer;
-        form.querySelector('input[name="employee"]').value = transaction.employee;
-        form.querySelector('input[name="amount"]').value = transaction.amount;
+// Mở modal sửa
+function openEditModal(id) {
+    const t = transactions.find(item => item.id == id);
+    if (t) {
+        const form = $('#editTransactionForm');
+        form.find('[name="id"]').val(t.id);
+        form.find('[name="customer"]').val(t.customer);
+        form.find('[name="employee"]').val(t.employee);
+        form.find('[name="amount"]').val(t.amount);
         openModal('editTransactionModal');
     }
 }
 
-function openDeleteModal(transactionId = null) {
-    if (transactionId) {
+// Mở modal xóa
+function openDeleteModal(id = null) {
+    if (id) {
         selectedTransactions.clear();
-        selectedTransactions.add(transactionId);
+        selectedTransactions.add(parseInt(id));
     }
     openModal('deleteTransactionModal');
 }
 
-function viewTransaction(transactionId) {
-    const transaction = transactions.find(t => t.id === transactionId);
-    if (transaction) {
-        alert(`Thông tin giao dịch:\n\nID: ${transaction.id}\nKhách hàng: ${transaction.customer}\nNhân viên: ${transaction.employee}\nSố tiền: ${formatCurrency(transaction.amount)} ₫\nNgày: ${formatDate(transaction.date)}`);
-    }
-}
-
+// Validate form
 function validateForm(form) {
     const errors = [];
-    const formData = new FormData(form);
+    const customer = form.find('[name="customer"]').val().trim();
+    const employee = form.find('[name="employee"]').val().trim();
+    const amount = form.find('[name="amount"]').val();
     
-    const customer = formData.get('customer') ? formData.get('customer').trim() : '';
-    const employee = formData.get('employee') ? formData.get('employee').trim() : '';
-    const amount = formData.get('amount');
-    
-    // Kiểm tra tên khách hàng
-    if (!customer) {
-        errors.push('Tên khách hàng không được để trống');
-    } else if (customer.length > 30) {
-        errors.push('Tên khách hàng không được quá 30 ký tự');
-    }
-    
-    // Kiểm tra tên nhân viên
-    if (!employee) {
-        errors.push('Tên nhân viên không được để trống');
-    } else if (employee.length > 30) {
-        errors.push('Tên nhân viên không được quá 30 ký tự');
-    }
-    
-    // Kiểm tra số tiền
-    if (!amount || amount <= 0) {
-        errors.push('Số tiền phải lớn hơn 0');
-    }
+    if (!customer) errors.push('Tên khách hàng không được để trống');
+    if (customer.length > 30) errors.push('Tên khách hàng không được quá 30 ký tự');
+    if (!employee) errors.push('Tên nhân viên không được để trống');
+    if (employee.length > 30) errors.push('Tên nhân viên không được quá 30 ký tự');
+    if (!amount || amount <= 0) errors.push('Số tiền phải lớn hơn 0');
     
     return errors;
 }
 
-function showFormErrors(formId, errors) {
-    const errorDiv = document.getElementById(formId + 'Errors');
+// Hiển thị lỗi
+function showErrors(formId, errors) {
+    const errorDiv = $('#' + formId + 'Errors');
     if (errors.length > 0) {
-        errorDiv.innerHTML = '<ul>' + errors.map(error => `<li>${error}</li>`).join('') + '</ul>';
-        errorDiv.style.display = 'block';
+        errorDiv.html('<ul>' + errors.map(e => `<li>${e}</li>`).join('') + '</ul>').show();
         return false;
-    } else {
-        errorDiv.style.display = 'none';
-        return true;
     }
+    errorDiv.hide();
+    return true;
 }
 
-function addTransaction(event) {
-    event.preventDefault();
-    const form = document.getElementById('addTransactionForm');
+// Thêm giao dịch
+function addTransaction() {
+    const form = $('#addTransactionForm');
     const errors = validateForm(form);
     
-    if (!showFormErrors('addForm', errors)) {
-        return false;
-    }
+    if (!showErrors('addForm', errors)) return;
     
-    const formData = new FormData(form);
     const newTransaction = {
         id: Math.max(...transactions.map(t => t.id)) + 1,
-        customer: formData.get('customer').trim(),
-        employee: formData.get('employee').trim(),
-        amount: parseInt(formData.get('amount')),
+        customer: form.find('[name="customer"]').val().trim(),
+        employee: form.find('[name="employee"]').val().trim(),
+        amount: parseInt(form.find('[name="amount"]').val()),
         date: new Date().toISOString()
     };
     
@@ -267,31 +253,27 @@ function addTransaction(event) {
     filteredTransactions = [...transactions];
     renderTable();
     closeModal('addTransactionModal');
-    
+    form[0].reset();
     alert('Thêm giao dịch thành công!');
-    return false;
 }
 
-function updateTransaction(event) {
-    event.preventDefault();
-    const form = document.getElementById('editTransactionForm');
+// Cập nhật giao dịch
+function updateTransaction() {
+    const form = $('#editTransactionForm');
     const errors = validateForm(form);
     
-    if (!showFormErrors('editForm', errors)) {
-        return false;
-    }
+    if (!showErrors('editForm', errors)) return;
     
-    const formData = new FormData(form);
-    const transactionId = parseInt(formData.get('id'));
+    const id = parseInt(form.find('[name="id"]').val());
+    const index = transactions.findIndex(t => t.id === id);
     
-    const transactionIndex = transactions.findIndex(t => t.id === transactionId);
-    if (transactionIndex !== -1) {
-        transactions[transactionIndex] = {
-            id: transactionId,
-            customer: formData.get('customer').trim(),
-            employee: formData.get('employee').trim(),
-            amount: parseInt(formData.get('amount')),
-            date: transactions[transactionIndex].date
+    if (index !== -1) {
+        transactions[index] = {
+            id: id,
+            customer: form.find('[name="customer"]').val().trim(),
+            employee: form.find('[name="employee"]').val().trim(),
+            amount: parseInt(form.find('[name="amount"]').val()),
+            date: transactions[index].date
         };
         
         filteredTransactions = [...transactions];
@@ -299,21 +281,18 @@ function updateTransaction(event) {
         closeModal('editTransactionModal');
         alert('Cập nhật giao dịch thành công!');
     }
-    return false;
 }
 
-function deleteSelectedTransactions() {
-    selectedTransactions.forEach(transactionId => {
-        const index = transactions.findIndex(t => t.id === transactionId);
-        if (index !== -1) {
-            transactions.splice(index, 1);
-        }
+// Xóa giao dịch
+function deleteTransactions() {
+    selectedTransactions.forEach(id => {
+        const index = transactions.findIndex(t => t.id === id);
+        if (index !== -1) transactions.splice(index, 1);
     });
     
     selectedTransactions.clear();
     filteredTransactions = [...transactions];
     
-    // Adjust current page if necessary
     const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
     if (currentPage > totalPages && totalPages > 0) {
         currentPage = totalPages;
@@ -324,40 +303,80 @@ function deleteSelectedTransactions() {
     alert('Xóa giao dịch thành công!');
 }
 
-function searchTransactions() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    filteredTransactions = transactions.filter(transaction => 
-        transaction.customer.toLowerCase().includes(searchTerm) ||
-        transaction.employee.toLowerCase().includes(searchTerm) ||
-        transaction.id.toString().includes(searchTerm) ||
-        transaction.amount.toString().includes(searchTerm)
-    );
-    
-    currentPage = 1;
-    renderTable();
-}
-
-// Event listeners
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize table
+// jQuery Events
+$(document).ready(function() {
     renderTable();
     
-    // Add search input event listener
-    document.getElementById('searchInput').addEventListener('input', searchTransactions);
+    // Tìm kiếm
+    $('#searchInput').on('input', searchTransactions);
     
-    // Prevent form submission on enter key in search input
-    document.getElementById('searchInput').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            searchTransactions();
+    // Phân trang
+    $(document).on('click', '#pagination a', function(e) {
+        e.preventDefault();
+        if (!$(this).parent().hasClass('disabled')) {
+            currentPage = parseInt($(this).data('page'));
+            renderTable();
         }
     });
-});
-
-// Close modal when clicking outside
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('modal')) {
-        const modalId = event.target.id;
-        closeModal(modalId);
-    }
+    
+    // Chọn tất cả
+    $('#selectAll').on('change', toggleSelectAll);
+    
+    // Chọn từng item
+    $(document).on('change', '#transactionTableBody input[type="checkbox"]', function() {
+        toggleSelection(parseInt($(this).val()));
+    });
+    
+    // Các nút action
+    $('.btn-success').on('click', function() {
+        openModal('addTransactionModal');
+    });
+    
+    $('#deleteSelectedBtn').on('click', function() {
+        if (selectedTransactions.size > 0) {
+            openModal('deleteTransactionModal');
+        }
+    });
+    
+    $(document).on('click', '.view', function(e) {
+        e.preventDefault();
+        viewTransaction($(this).data('id'));
+    });
+    
+    $(document).on('click', '.edit', function(e) {
+        e.preventDefault();
+        openEditModal($(this).data('id'));
+    });
+    
+    $(document).on('click', '.delete', function(e) {
+        e.preventDefault();
+        openDeleteModal($(this).data('id'));
+    });
+    
+    // Đóng modal
+    $('.close, .btn-secondary').on('click', function() {
+        $('.modal').removeClass('show').hide();
+        $('body').removeClass('modal-open');
+    });
+    
+    // Click bên ngoài đóng modal
+    $('.modal').on('click', function(e) {
+        if (e.target === this) {
+            $(this).removeClass('show').hide();
+            $('body').removeClass('modal-open');
+        }
+    });
+    
+    // Submit forms
+    $('#addTransactionModal .btn-success').on('click', function(e) {
+        e.preventDefault();
+        addTransaction();
+    });
+    
+    $('#editTransactionModal .btn-primary').on('click', function(e) {
+        e.preventDefault();
+        updateTransaction();
+    });
+    
+    $('#deleteTransactionModal .btn-danger').on('click', deleteTransactions);
 });
