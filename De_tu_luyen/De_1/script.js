@@ -3,230 +3,200 @@ const itemsPerPage = 5;
 let filteredEmployees = [...employees];
 let selectedEmployees = new Set();
 
+// Hiển thị bảng
 function renderTable() {
-    const tbody = document.getElementById('employeeTableBody');
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentEmployees = filteredEmployees.slice(startIndex, endIndex);
+    const start = (currentPage - 1) * itemsPerPage;
+    const currentEmployees = filteredEmployees.slice(start, start + itemsPerPage);
 
-    tbody.innerHTML = currentEmployees.map(employee => `
-        <tr>
-            <td>
-                <input type="checkbox" class="checkbox" value="${employee.id}" 
-                       onchange="toggleEmployeeSelection(${employee.id})"
-                       ${selectedEmployees.has(employee.id) ? 'checked' : ''}>
-            </td>
-            <td>${employee.name}</td>
-            <td>${employee.email}</td>
-            <td>${employee.address}</td>
-            <td>${employee.phone}</td>
-            <td>
-                <div class="actions">
-                    <button class="btn-icon edit" onclick="openEditModal(${employee.id})" title="Edit">
-                        <svg class="icon" viewBox="0 0 20 20">
-                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
-                        </svg>
-                    </button>
-                    <button class="btn-icon delete" onclick="openDeleteModal(${employee.id})" title="Delete">
-                        <svg class="icon" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"/>
-                        </svg>
-                    </button>
-                </div>
-            </td>
-        </tr>
-    `).join('');
-
-    updatePagination();
-    updatePaginationInfo();
-}
-
-function updatePagination() {
-    const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
-    const pagination = document.getElementById('pagination');
-    
-    let paginationHTML = '';
-    
-    // Previous button
-    paginationHTML += `<a href="#" onclick="changePage(${currentPage - 1})" 
-                      ${currentPage === 1 ? 'class="disabled"' : ''}>Previous</a>`;
-    
-    // Page numbers
-    for (let i = 1; i <= totalPages; i++) {
-        paginationHTML += `<a href="#" onclick="changePage(${i})" 
-                          ${i === currentPage ? 'class="active"' : ''}>${i}</a>`;
-    }
-    
-    // Next button
-    paginationHTML += `<a href="#" onclick="changePage(${currentPage + 1})" 
-                      ${currentPage === totalPages ? 'class="disabled"' : ''}>Next</a>`;
-    
-    pagination.innerHTML = paginationHTML;
-}
-
-function updatePaginationInfo() {
-    const startIndex = (currentPage - 1) * itemsPerPage + 1;
-    const endIndex = Math.min(currentPage * itemsPerPage, filteredEmployees.length);
-    
-    document.getElementById('currentStart').textContent = startIndex;
-    document.getElementById('totalEntries').textContent = filteredEmployees.length;
-}
-
-function changePage(page) {
-    const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
-    if (page >= 1 && page <= totalPages) {
-        currentPage = page;
-        renderTable();
-    }
-}
-
-function toggleSelectAll() {
-    const selectAllCheckbox = document.getElementById('selectAll');
-    const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
-    
-    if (selectAllCheckbox.checked) {
-        checkboxes.forEach(cb => {
-            cb.checked = true;
-            selectedEmployees.add(parseInt(cb.value));
-        });
-    } else {
-        checkboxes.forEach(cb => {
-            cb.checked = false;
-            selectedEmployees.delete(parseInt(cb.value));
-        });
-    }
-}
-
-function toggleEmployeeSelection(employeeId) {
-    if (selectedEmployees.has(employeeId)) {
-        selectedEmployees.delete(employeeId);
-    } else {
-        selectedEmployees.add(employeeId);
-    }
-    
-    // Update select all checkbox
-    const selectAllCheckbox = document.getElementById('selectAll');
-    const visibleCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]');
-    const allChecked = Array.from(visibleCheckboxes).every(cb => cb.checked);
-    selectAllCheckbox.checked = allChecked;
-}
-
-function openModal(modalId) {
-    document.getElementById(modalId).classList.add('show');
-}
-
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.remove('show');
-}
-
-function openAddModal() {
-    document.getElementById('addEmployeeForm').reset();
-    openModal('addEmployeeModal');
-}
-
-function openEditModal(employeeId) {
-    const employee = employees.find(emp => emp.id === employeeId);
-    if (employee) {
-        const form = document.getElementById('editEmployeeForm');
-        form.querySelector('input[name="id"]').value = employee.id;
-        form.querySelector('input[name="name"]').value = employee.name;
-        form.querySelector('input[name="email"]').value = employee.email;
-        form.querySelector('textarea[name="address"]').value = employee.address;
-        form.querySelector('input[name="phone"]').value = employee.phone;
-        openModal('editEmployeeModal');
-    }
-}
-
-function openDeleteModal(employeeId = null) {
-    if (employeeId) {
-        selectedEmployees.clear();
-        selectedEmployees.add(employeeId);
-    }
-    openModal('deleteEmployeeModal');
-}
-
-function addEmployee() {
-    const form = document.getElementById('addEmployeeForm');
-    const formData = new FormData(form);
-    
-    const newEmployee = {
-        id: Math.max(...employees.map(emp => emp.id)) + 1,
-        name: formData.get('name'),
-        email: formData.get('email'),
-        address: formData.get('address'),
-        phone: formData.get('phone')
-    };
-    
-    employees.push(newEmployee);
-    filteredEmployees = [...employees];
-    renderTable();
-    closeModal('addEmployeeModal');
-}
-
-function updateEmployee() {
-    const form = document.getElementById('editEmployeeForm');
-    const formData = new FormData(form);
-    const employeeId = parseInt(formData.get('id'));
-    
-    const employeeIndex = employees.findIndex(emp => emp.id === employeeId);
-    if (employeeIndex !== -1) {
-        employees[employeeIndex] = {
-            id: employeeId,
-            name: formData.get('name'),
-            email: formData.get('email'),
-            address: formData.get('address'),
-            phone: formData.get('phone')
-        };
-        
-        filteredEmployees = [...employees];
-        renderTable();
-        closeModal('editEmployeeModal');
-    }
-}
-
-function deleteSelectedEmployees() {
-    selectedEmployees.forEach(employeeId => {
-        const index = employees.findIndex(emp => emp.id === employeeId);
-        if (index !== -1) {
-            employees.splice(index, 1);
-        }
+    let html = '';
+    currentEmployees.forEach(emp => {
+        html += `
+            <tr>
+                <td><input type="checkbox" value="${emp.id}"></td>
+                <td>${emp.name}</td>
+                <td>${emp.email}</td>
+                <td>${emp.address}</td>
+                <td>${emp.phone}</td>
+                <td>
+                    <button class="btn-icon edit" data-id="${emp.id}">✏️</button>
+                    <button class="btn-icon delete" data-id="${emp.id}">🗑️</button>
+                </td>
+            </tr>
+        `;
     });
     
-    selectedEmployees.clear();
-    filteredEmployees = [...employees];
-    
-    // Adjust current page if necessary
-    const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
-    if (currentPage > totalPages && totalPages > 0) {
-        currentPage = totalPages;
-    }
-    
-    renderTable();
-    closeModal('deleteEmployeeModal');
+    $('#employeeTableBody').html(html);
+    updatePagination();
+    $('#currentStart').text(start + 1);
+    $('#totalEntries').text(filteredEmployees.length);
 }
 
-function searchEmployees() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    filteredEmployees = employees.filter(employee => 
-        employee.name.toLowerCase().includes(searchTerm) ||
-        employee.email.toLowerCase().includes(searchTerm) ||
-        employee.address.toLowerCase().includes(searchTerm) ||
-        employee.phone.includes(searchTerm)
-    );
+// Phân trang
+function updatePagination() {
+    const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
+    let html = '';
     
+    // Nút Previous
+    if (currentPage > 1) {
+        html += `<a href="#" data-page="${currentPage - 1}">Previous</a>`;
+    }
+    
+    // Số trang
+    for (let i = 1; i <= totalPages; i++) {
+        const active = i === currentPage ? 'active' : '';
+        html += `<a href="#" data-page="${i}" class="${active}">${i}</a>`;
+    }
+    
+    // Nút Next
+    if (currentPage < totalPages) {
+        html += `<a href="#" data-page="${currentPage + 1}">Next</a>`;
+    }
+    
+    $('#pagination').html(html);
+}
+
+// Tìm kiếm
+function searchEmployees() {
+    const term = $('#searchInput').val().toLowerCase();
+    filteredEmployees = employees.filter(emp => 
+        emp.name.toLowerCase().includes(term) ||
+        emp.email.toLowerCase().includes(term) ||
+        emp.address.toLowerCase().includes(term) ||
+        emp.phone.includes(term)
+    );
     currentPage = 1;
     renderTable();
 }
 
-// Event listeners
-document.getElementById('searchInput').addEventListener('input', searchEmployees);
+// Mở/đóng modal
+function openModal(id) {
+    $('#' + id).addClass('show');
+}
 
-// Close modal when clicking outside
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.classList.remove('show');
-    }
+function closeModal(id) {
+    $('#' + id).removeClass('show');
+}
+
+// Thêm nhân viên
+function addEmployee() {
+    const form = $('#addEmployeeForm');
+    const newEmp = {
+        id: Math.max(...employees.map(e => e.id)) + 1,
+        name: form.find('[name="name"]').val(),
+        email: form.find('[name="email"]').val(),
+        address: form.find('[name="address"]').val(),
+        phone: form.find('[name="phone"]').val()
+    };
+    
+    employees.push(newEmp);
+    filteredEmployees = [...employees];
+    renderTable();
+    closeModal('addEmployeeModal');
+    form[0].reset();
+}
+
+// Sửa nhân viên
+function editEmployee(id) {
+    const emp = employees.find(e => e.id == id);
+    const form = $('#editEmployeeForm');
+    
+    form.find('[name="id"]').val(emp.id);
+    form.find('[name="name"]').val(emp.name);
+    form.find('[name="email"]').val(emp.email);
+    form.find('[name="address"]').val(emp.address);
+    form.find('[name="phone"]').val(emp.phone);
+    
+    openModal('editEmployeeModal');
+}
+
+function updateEmployee() {
+    const form = $('#editEmployeeForm');
+    const id = parseInt(form.find('[name="id"]').val());
+    const index = employees.findIndex(e => e.id === id);
+    
+    employees[index] = {
+        id: id,
+        name: form.find('[name="name"]').val(),
+        email: form.find('[name="email"]').val(),
+        address: form.find('[name="address"]').val(),
+        phone: form.find('[name="phone"]').val()
+    };
+    
+    filteredEmployees = [...employees];
+    renderTable();
+    closeModal('editEmployeeModal');
+}
+
+// Xóa nhân viên
+function deleteEmployee(id) {
+    selectedEmployees.clear();
+    selectedEmployees.add(parseInt(id));
+    openModal('deleteEmployeeModal');
+}
+
+function confirmDelete() {
+    selectedEmployees.forEach(id => {
+        const index = employees.findIndex(e => e.id === id);
+        employees.splice(index, 1);
+    });
+    
+    filteredEmployees = [...employees];
+    renderTable();
+    closeModal('deleteEmployeeModal');
+}
+
+// Chọn tất cả
+function toggleSelectAll() {
+    const checked = $('#selectAll').is(':checked');
+    $('#employeeTableBody input[type="checkbox"]').prop('checked', checked);
+}
+
+// jQuery Events
+$(document).ready(function() {
+    renderTable();
+    
+    // Tìm kiếm
+    $('#searchInput').on('input', searchEmployees);
+    
+    // Phân trang
+    $(document).on('click', '#pagination a', function(e) {
+        e.preventDefault();
+        currentPage = parseInt($(this).data('page'));
+        renderTable();
+    });
+    
+    // Chọn tất cả
+    $('#selectAll').on('change', toggleSelectAll);
+    
+    // Nút thêm
+    $('.btn-success').on('click', function() {
+        openModal('addEmployeeModal');
+    });
+    
+    // Nút sửa
+    $(document).on('click', '.edit', function() {
+        editEmployee($(this).data('id'));
+    });
+    
+    // Nút xóa
+    $(document).on('click', '.delete', function() {
+        deleteEmployee($(this).data('id'));
+    });
+    
+    // Đóng modal
+    $('.modal-close, .btn-primary').on('click', function() {
+        $('.modal').removeClass('show');
+    });
+    
+    // Click bên ngoài đóng modal
+    $('.modal').on('click', function(e) {
+        if (e.target === this) {
+            $(this).removeClass('show');
+        }
+    });
+    
+    // Submit forms
+    $('#addEmployeeModal .btn-success').on('click', addEmployee);
+    $('#editEmployeeModal .btn-success').on('click', updateEmployee);
+    $('#deleteEmployeeModal .btn-danger').on('click', confirmDelete);
 });
-
-// Initialize table
-renderTable();

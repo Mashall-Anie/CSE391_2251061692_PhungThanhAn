@@ -27,7 +27,7 @@
         <div class="page-header">
             <h1 class="page-title">Manage Employees</h1>
             <div class="action-buttons">
-                <button class="btn btn-danger" onclick="openDeleteModal()">
+                <button class="btn btn-danger">
                     <svg class="icon" viewBox="0 0 20 20">
                         <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                         <path fill-rule="evenodd"
@@ -35,7 +35,7 @@
                     </svg>
                     Delete
                 </button>
-                <button class="btn btn-success" onclick="openAddModal()">
+                <button class="btn btn-success">
                     <svg class="icon" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
                             d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
@@ -50,7 +50,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" class="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                            <input type="checkbox" class="checkbox" id="selectAll">
                         </th>
                         <th>Name</th>
                         <th>Email</th>
@@ -80,7 +80,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Add Employee</h2>
-                <button class="modal-close" onclick="closeModal('addEmployeeModal')">&times;</button>
+                <button class="modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="addEmployeeForm">
@@ -103,8 +103,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closeModal('addEmployeeModal')">Cancel</button>
-                <button class="btn btn-success" onclick="addEmployee()">Add</button>
+                <button class="btn btn-primary">Cancel</button>
+                <button class="btn btn-success">Add</button>
             </div>
         </div>
     </div>
@@ -114,7 +114,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Edit Employee</h2>
-                <button class="modal-close" onclick="closeModal('editEmployeeModal')">&times;</button>
+                <button class="modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="editEmployeeForm">
@@ -138,8 +138,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closeModal('editEmployeeModal')">Cancel</button>
-                <button class="btn btn-success" onclick="updateEmployee()">Save</button>
+                <button class="btn btn-primary">Cancel</button>
+                <button class="btn btn-success">Save</button>
             </div>
         </div>
     </div>
@@ -149,19 +149,19 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Delete Employee</h2>
-                <button class="modal-close" onclick="closeModal('deleteEmployeeModal')">&times;</button>
+                <button class="modal-close">&times;</button>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to delete these records?</p>
                 <p style="color: #f59e0b; font-size: 0.875rem;">This action cannot be undone.</p>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closeModal('deleteEmployeeModal')">Cancel</button>
-                <button class="btn btn-danger" onclick="deleteSelectedEmployees()">Delete</button>
+                <button class="btn btn-primary">Cancel</button>
+                <button class="btn btn-danger">Delete</button>
             </div>
         </div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
