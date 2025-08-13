@@ -1,0 +1,154 @@
+/* src/App.css - Custom styles để làm giao diện tròn mềm mại hơn */
+
+/* Override Bootstrap card styles */
+.card {
+  border-radius: 20px !important;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Statistics cards styling */
+.stats-card {
+  border-radius: 24px !important;
+  padding: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Form inputs styling */
+.form-control {
+  border-radius: 12px !important;
+  border: 1px solid #e0e6ed;
+  padding: 12px 16px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Button styling */
+.btn {
+  border-radius: 12px !important;
+  font-weight: 500;
+  padding: 12px 20px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5a6fd8, #6a4190);
+  transform: translateY(-1px);
+}
+
+/* Filter buttons */
+.filter-buttons .btn {
+  border-radius: 20px !important;
+  font-size: 13px;
+  padding: 8px 16px;
+}
+
+/* Table styling */
+.table {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.table td {
+  border: none;
+  padding: 16px 12px;
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Badge styling */
+.badge {
+  border-radius: 12px !important;
+  font-weight: 500;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* Custom rounded buttons for actions */
+.btn-sm {
+  border-radius: 8px !important;
+  padding: 6px 10px;
+}
+
+/* Card title styling */
+.card-title {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+/* Form labels */
+.form-label {
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
+/* Empty state styling */
+.empty-state {
+  padding: 3rem 2rem;
+}
+
+.empty-state i {
+  color: #cbd5e0;
+  margin-bottom: 1rem;
+}
+
+/* Statistics numbers */
+.stats-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Container padding */
+.main-container {
+  padding: 2rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card {
+    border-radius: 16px !important;
+    margin-bottom: 1rem;
+  }
+  
+  .stats-card {
+    border-radius: 18px !important;
+    padding: 1rem;
+  }
+  
+  .filter-buttons .btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
